@@ -1,1 +1,1 @@
-Sincronização Visual Studio Code e github.
+Sincronização Visual Studio Code e github de Kauê Bosel.
