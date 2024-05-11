@@ -7,6 +7,7 @@ janelas). Cada caixa de azulejos possui 1,5 m2.*/
 
 int main(){
     float compri, larg, alt, total;
+    printf("digite compri, larg e altura\n");
     scanf("%f%f%f", &compri, &larg, &alt);
     total = (2*(compri*larg) + (compri*alt) + (larg*alt));
     printf("%f" ,total/1.5);
