@@ -2,31 +2,23 @@
  * Note: The returned array must be malloced, assume caller calls free().
  */
 char** fizzBuzz(int n, int* returnSize) {
-    char* answer = ( char* ) malloc ( sizeof ( char ) * ( n * 9 ) );    //fiz uma string mais pra testar do q qualquer coisa, mas
-    answer[1] = '\0';                                                   //não consigo fazer ela funcionar de jeito nenhum, ela eh
-                                                                        //criada pra sobrar um monte de memória anyway
-    int count = 0;
-
-    for(int i = 0; i < n; i++){
-        if(n % 3 == 0 && n % 5 == 0){                                   //podia usar um 15 em vez de 3 e 5
-            strcat(answer, "fizzbuzz");                                 //a ideia eh adicionar fizzbuzz na string
-            count += 9;
-            continue;
+    *returnSize = n;
+    char **answer = (char **) malloc(n*sizeof(char*));
+    for(int i = 1; i <= n; i++){
+        answer[i-1] = (char*) malloc(sizeof(char)*9);
+        if(i % 15 == 0 ){                                   
+            strcpy(answer[i-1], "FizzBuzz");                                 
         }
-        if(n % 3 == 0){
-            if(n == 3){
-                strcpy (answer, "fizz");                                //como strcat vai pro final, fiz um strcpy pra primeira ocorrência
-            }else{
-                strcat(answer, "fizz");
-            }
-            count += 5;
+        else if(i % 3 == 0){
+            strcpy(answer[i-1], "Fizz");
         }
-        if(n % 5 == 0){
-            strcat(answer, "buzz");
-            count += 5;
+        else if(i % 5 == 0){
+            strcpy(answer[i-1], "Buzz");
         }
-        answer[count] = "n + '0'";                      //transforma o int em char
-        answer++;                                       //passa p/ proximo elemento array
+        else
+        {
+            snprintf(answer[i-1], 9 ,"%d", i);
+        }
     }
     return answer;
 }
