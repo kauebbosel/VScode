@@ -1,63 +1,67 @@
-/*Armazene todos os nomes na mesma string, não pode ter desperdício de memória, faça menu: 1.add nome
+/*Armazene todos os nomes e sobrenomes na mesma string, não pode ter desperdício de memória, faça menu: 1.add nome
 2.remove nome, 3.lista, 4.sai*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-struct celula{
-    char conteudo;
-    struct celula *prox;
-};
-typedef struct celula cel;
+typedef struct pessoa{          //lista encadeada simples
+    char *nome;
+    struct pessoa *pNext;
+}pessoa;
 
-cel *cria();
-void insereComeco (cel *head, char conteudo);
+pessoa adicionarPessoa(pessoa *head);
+pessoa removerPessoa(pessoa *head);
+pessoa listarTodos(pessoa *head); 
 
 int main(){
-    int menu=0;
-    char stringtemp[100];
-    cel *head = cria();
-    
-    do{
-        printf("1. Botar nome, 2.Remover nome, 3.Listar, 4.Sair\n");
-        scanf("%d",&menu);
+    int menu = 0;
+    pessoa *head = malloc(sizeof(pessoa));     //aloca 10 pessoas diferentes
+    if(head == NULL){
+        printf("erro ao alocar memoria\n");
+        return 1;
+    }
+    head->pNext = NULL;
 
+    switch (menu)
+    {
+        case 1:
+        adicionarPessoa(head);
+            break;
+        case 2:
+        removerPessoa(head);
+        break;
         
-        if(menu == 1){
-            printf("Formato:Nome Sobrenome_\n");
-            fgets(stringtemp, 100, stdin);
-            for(int i = 0; i < strlen(stringtemp); i++){
-                insereComeco(head, stringtemp[i]);
-            }
-        }
-        if(menu == 2){
+        case 3:
+        listarTodos(head);
+        break;
 
-        }
-        if(menu == 3){
-            for(cel *copiahead = head; copiahead = copiahead->prox; copiahead->prox != NULL){
-                printf("%c",head);
-            }
-        }
-        if(menu == 4){
-            free(head);
-            printf("Saindo\n");
-        }
+        case 4:
+        printf("Saindo");
+        return 0;
 
-    }while(menu !=4);
+        default:
+        printf("valor inválido\n");
+            break;
+    }
 }
 
-cel *cria(){
-    cel *nova;
-    nova = (cel*)malloc(sizeof(cel));
-    nova->prox = NULL;
-    return nova;
-}
+pessoa adicionarPessoa(pessoa *head){
+    int len = 0;
+    char cTemp[100];
+    pessoa *new = malloc(sizeof(pessoa));
+    if(new == NULL){
+        printf("Erro ao alocar memoria\n");
+        exit(1);
+    }
+    head->pNext = new;
+    new->pNext = NULL;
 
-void insereComeco (cel *head, char conteudo){
-    cel *nova;
+    printf("digite nome: ");
+    fgets(cTemp, 100, stdin);
+    len = strlen(cTemp);                        //a ideia era fazer um array temporário e dps fazer um permanente com 0 desperdicio de memoria
+    pessoa *aux = malloc(sizeof(char) * len);
+    *new->pNext = aux;
+    printf("%s",new->nome);
 
-    nova = (cel*)malloc(sizeof(cel));
-    nova->conteudo = conteudo;
-    nova->prox = head->prox;
-    head->prox = nova;
+    return *new;
 }
