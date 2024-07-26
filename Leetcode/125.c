@@ -1,4 +1,3 @@
-
 bool isPalindrome(char* s) {
     int sSize = strlen(s) - 1;
     int end = sSize;
